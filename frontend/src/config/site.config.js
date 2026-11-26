@@ -9,7 +9,7 @@ export const siteConfig = {
   contact: {
     phone: '+91 87224 75245',
     phoneHref: '+918722475245',
-    email: 'madangowda16@gmail.com',
+    email: 'svntechnologies2123@gmail.com',
     hours: 'Mon to Sat, 9:00 AM to 6:00 PM', // sample value: update to your working hours
   },
 
