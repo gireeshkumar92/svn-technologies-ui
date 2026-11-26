@@ -33,7 +33,7 @@ export const siteConfig = {
   form: {
     mode: 'endpoint',
     // Paste the Web app URL from the Apps Script deployment (ends with /exec). See backend/README.md.
-    endpoint: 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE',
+    endpoint: 'https://script.google.com/macros/s/AKfycby0FsoJ2rlZRI6vkcz_6MalfmlSYSsxXezOBns4j43PpZAesJvBgUfmr2vxwSXMgGz2Iw/exec',
     timeoutMs: 15000,
     subjects: [
       'Aerospace components enquiry',
