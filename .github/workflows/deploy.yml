@@ -29,6 +29,9 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build
         run: npm run build
+        env:
+          # Optional: set a repository variable SITE_URL (Settings -> Variables) if you use a custom domain.
+          SITE_URL: ${{ vars.SITE_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
