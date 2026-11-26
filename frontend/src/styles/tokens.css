@@ -1,0 +1,53 @@
+/* Design tokens. Change colours, fonts and spacing here. */
+:root {
+  --signal: #ff5b1f;
+  --signal-soft: #ff8a3d;
+  --ink: #0b1626;
+  --titanium: #c7d0da;
+
+  --font-display: 'Archivo', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --radius: 10px;
+  --radius-lg: 18px;
+  --container: 1200px;
+  --header-h: 72px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root,
+[data-theme='light'] {
+  --bg: #f4f6f8;
+  --bg-alt: #e8edf2;
+  --surface: #ffffff;
+  --text: #0b1626;
+  --muted: #475a70;
+  --line: #d2dae3;
+  --accent-text: #bf400f;
+  --shadow: 0 1px 2px rgba(11, 22, 38, 0.06), 0 12px 32px -12px rgba(11, 22, 38, 0.18);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #0b1626;
+  --bg-alt: #0f1e33;
+  --surface: #14273f;
+  --text: #eaf0f6;
+  --muted: #a3b3c6;
+  --line: #243a55;
+  --accent-text: #ff8a3d;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -14px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+/* Sections that are always dark, in either theme */
+.on-dark {
+  --bg: #0b1626;
+  --bg-alt: #0f1e33;
+  --surface: #14273f;
+  --text: #eaf0f6;
+  --muted: #a9b9cc;
+  --line: #28405c;
+  --accent-text: #ff8a3d;
+  color: var(--text);
+}
