@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Moon, Sun, X } from 'lucide-react';
@@ -26,6 +27,15 @@ export default function Header() {
   const { openQuote } = useQuote();
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // While the mobile menu is open: lock page scroll and close on Escape.
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [open]);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 12);
     on();
@@ -65,6 +75,8 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Rendered in document.body: the header's backdrop-filter would otherwise trap a fixed-position menu inside the header. */}
+      {createPortal(
       <AnimatePresence>
         {open && (
           <motion.div className="drawer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}>
@@ -84,7 +96,9 @@ export default function Header() {
             </motion.nav>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
     </header>
   );
 }

@@ -45,11 +45,17 @@ export default function ContactForm({ initialSubject = '', idPrefix = 'contact',
         if (!formCfg.endpoint) throw new Error('config');
         const ctrl = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), formCfg.timeoutMs);
+        // text/plain avoids a CORS preflight, which Google Apps Script web apps do not answer.
         const res = await fetch(formCfg.endpoint, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal,
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ ...payload, website: values.website }),
+          signal: ctrl.signal,
         }).finally(() => clearTimeout(timer));
         if (!res.ok) throw new Error(`http-${res.status}`);
-        setStatus({ type: 'success', message: 'Thank you. Your message has been sent and we will contact you soon.' });
+        const data = await res.json().catch(() => null);
+        if (!data || data.ok !== true) throw new Error((data && data.error) || 'server');
+        setStatus({ type: 'success', message: 'Thank you. Your enquiry has been received and our team will contact you soon.' });
       } else {
         const body = `Name: ${payload.name}\nContact number: ${payload.phone}\nEmail: ${payload.email}\n\n${payload.message}`;
         window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(body)}`;
