@@ -9,7 +9,7 @@ export const siteConfig = {
   contact: {
     phone: '+91 87224 75245',
     phoneHref: '+918722475245',
-    email: 'madangowda16@gmail.com',
+    email: 'svntechnologies2123@gmail.com',
     hours: 'Mon to Sat, 9:00 AM to 6:00 PM', // sample value: update to your working hours
   },
 
@@ -33,7 +33,7 @@ export const siteConfig = {
   form: {
     mode: 'endpoint',
     // Paste the Web app URL from the Apps Script deployment (ends with /exec). See backend/README.md.
-    endpoint: 'https://script.google.com/macros/s/AKfycby0FsoJ2rlZRI6vkcz_6MalfmlSYSsxXezOBns4j43PpZAesJvBgUfmr2vxwSXMgGz2Iw/exec',
+    endpoint: 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE',
     timeoutMs: 15000,
     subjects: [
       'Aerospace components enquiry',
