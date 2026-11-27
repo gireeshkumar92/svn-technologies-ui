@@ -33,8 +33,8 @@ export default function Header() {
     if (!open) return undefined;
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+    document.documentElement.classList.add('menu-open');
+    return () => { document.removeEventListener('keydown', onKey); document.documentElement.classList.remove('menu-open'); };
   }, [open]);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 12);
@@ -79,18 +79,19 @@ export default function Header() {
       {createPortal(
       <AnimatePresence>
         {open && (
-          <motion.div className="drawer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}>
+          <motion.div
+            className="drawer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }} onClick={() => setOpen(false)}
+          >
             <motion.nav
               className="drawer__panel" aria-label="Mobile"
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
               <button className="icon-btn drawer__close" onClick={() => setOpen(false)} aria-label="Close menu"><X size={22} /></button>
-              {siteConfig.nav.map((n, i) => (
-                <motion.div key={n.to} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.08 + i * 0.05 }}>
-                  <NavLink to={n.to} end={n.to === '/'} className={({ isActive }) => `drawer__link ${isActive ? 'is-active' : ''}`}>{n.label}</NavLink>
-                </motion.div>
+              {siteConfig.nav.map((n) => (
+                <NavLink key={n.to} to={n.to} end={n.to === '/'} className={({ isActive }) => `drawer__link ${isActive ? 'is-active' : ''}`}>{n.label}</NavLink>
               ))}
               <button className="btn btn--primary" onClick={() => { setOpen(false); openQuote(); }}>Request a quote</button>
             </motion.nav>

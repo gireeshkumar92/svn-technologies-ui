@@ -54,7 +54,11 @@ export default function ContactForm({ initialSubject = '', idPrefix = 'contact',
         }).finally(() => clearTimeout(timer));
         if (!res.ok) throw new Error(`http-${res.status}`);
         const data = await res.json().catch(() => null);
-        if (!data || data.ok !== true) throw new Error((data && data.error) || 'server');
+        if (!data || data.ok !== true) {
+          const e = new Error('server');
+          e.serverMessage = data && data.error;
+          throw e;
+        }
         setStatus({ type: 'success', message: 'Thank you. Your enquiry has been received and our team will contact you soon.' });
       } else {
         const body = `Name: ${payload.name}\nContact number: ${payload.phone}\nEmail: ${payload.email}\n\n${payload.message}`;
@@ -68,7 +72,9 @@ export default function ContactForm({ initialSubject = '', idPrefix = 'contact',
       const aborted = err.name === 'AbortError';
       setStatus({
         type: 'error',
-        message: aborted
+        message: err.serverMessage
+          ? err.serverMessage
+          : aborted
           ? 'The request took too long. Check your connection and try again.'
           : `We could not send your message. Please try again, or call ${contact.phone} or email ${contact.email}.`,
       });
