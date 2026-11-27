@@ -53,10 +53,12 @@
 }
 
 /* Mobile menu: full-height solid panel that scrolls when the screen is short. */
+/* Page scroll lock while the menu is open (html class, so the layout does not jump) */
+html.menu-open, html.menu-open body { overflow: hidden; }
 .drawer { position: fixed; inset: 0; z-index: 250; background: rgba(5, 10, 18, 0.78); }
 .drawer__panel {
-  position: absolute; right: 0; top: 0; bottom: 0; width: min(100%, 380px); height: 100%; height: 100dvh;
-  background: var(--bg); color: var(--text); opacity: 1;
+  position: absolute; right: 0; top: 0; bottom: 0; width: min(100%, 380px);
+  background: var(--bg); color: var(--text); opacity: 1; will-change: transform; backface-visibility: hidden;
   padding: 76px 24px calc(32px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 4px;
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.45);
